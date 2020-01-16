@@ -1,0 +1,6 @@
+{
+	"disableAutoUpdate": false,
+	"author": "NMods",
+    "description": "Uncensor every word you say and read, no more *@&%~(|!",
+	"servers": ["https://raw.githubusercontent.com/nmods/no-more-censor/master/"]
+}
