@@ -1,11 +1,4 @@
-const DEFAULT_HOOK_SETTINGS = { order: -1002, filter: { fake: false } },
-    HOOK_ALL = { order: 1002, filter: { fake: null } },
-    HOOK_FAKE_LAST = { order: 10000000, filter: { fake: true } },
-    HOOK_TRUE_LAST = { order: 10000000, filter: { fake: false } },
-    HOOK_TRUE_ALL = { order: 10000000, filter: { fake: null } }
-
 const magic = '\u200b'
-const magicspace = '\u2005'
 
 module.exports = function nomorecensor(mod) {
     const command = mod.command || mod.require.command;
