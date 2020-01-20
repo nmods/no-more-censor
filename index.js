@@ -5,25 +5,25 @@ module.exports = function nomorecensor(mod) {
     let badwords = []
 
     mod.queryData('/AbuseLetterList/').then(result => {
-        badwords = result.children.map(x => x.attributes.string.trimEnd())
+        badwords = result.children.map(x => x.attributes.string.trimEnd().toLowerCase())
     })
 
     const CHAT_SERVER_PACKETS = [['S_CHAT', 3], ['S_WHISPER', 3], ['S_PRIVATE_CHAT', 1]];
     const CHAT_CLIENT_PACKETS = [['C_WHISPER', 1], ['C_CHAT', 1]];
-    for (let [packet, version] of CHAT_SERVER_PACKETS) mod.hook(packet, version, { order: 100000000, fake: null }, event => uncensorPacket(packet, event))
-    for (let [packet, version] of CHAT_CLIENT_PACKETS) mod.hook(packet, version, { order: 100000000, fake: null }, event => uncensorPacket(packet, event))
+    for (let [packet, version] of CHAT_SERVER_PACKETS) mod.hook(packet, version, { order: 100000000, filter: { fake: null } }, event => uncensorPacket(packet, event))
+    for (let [packet, version] of CHAT_CLIENT_PACKETS) mod.hook(packet, version, { order: 100000000, filter: { fake: null } }, event => uncensorPacket(packet, event))
 
     const uncensorPacket = (packet, event) => {
         if (packet == "C_CHAT" && event.channel == 18) return
         let uncensored = uncensor(event.message)
-        if (!uncensored || uncensored==event.message) return
+        if (!uncensored || uncensored == event.message) return
         event.message = uncensored
         return true
     }
 
     const uncensor = (str, debug = false) => {
         for (let i = 0; i < badwords.length; i++) {
-            if(i>0 && badwords[i]==badwords[i-1]) continue
+            if (i > 0 && badwords[i] == badwords[i - 1]) continue
             let position = str.indexOf(badwords[i])
             let count = 0
             while (position !== -1) {
