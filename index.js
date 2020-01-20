@@ -24,12 +24,12 @@ module.exports = function nomorecensor(mod) {
     const uncensor = (str, debug = false) => {
         for (let i = 0; i < badwords.length; i++) {
             if (i > 0 && badwords[i] == badwords[i - 1]) continue
-            let position = str.indexOf(badwords[i])
+            let position = str.toLowerCase().indexOf(badwords[i])
             let count = 0
             while (position !== -1) {
                 count++
                 str = str.substr(0, position + 1) + magic + str.substr(position + 1)
-                position = str.indexOf(badwords[i], position + 2)
+                position = str.toLowerCase().indexOf(badwords[i], position + 2)
                 if (count > 100) break
             }
             if (debug && count > 0) {
@@ -39,7 +39,6 @@ module.exports = function nomorecensor(mod) {
         }
         return str
     }
-
 
     this.destructor = () => {
     };
