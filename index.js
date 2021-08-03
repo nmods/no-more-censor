@@ -8,8 +8,8 @@ module.exports = function nomorecensor(mod) {
         badwords = result.children.map(x => x.attributes.string.trimEnd().toLowerCase())
     })
 
-    const CHAT_SERVER_PACKETS = [['S_CHAT', 3], ['S_WHISPER', 3], ['S_PRIVATE_CHAT', 1]];
-    const CHAT_CLIENT_PACKETS = [['C_WHISPER', 1], ['C_CHAT', 1]];
+    const CHAT_SERVER_PACKETS = [['S_CHAT', 4], ['S_WHISPER', 4], ['S_PRIVATE_CHAT', 1]];
+    const CHAT_CLIENT_PACKETS = [['C_WHISPER', 2], ['C_CHAT', 1]];
     for (let [packet, version] of CHAT_SERVER_PACKETS) mod.hook(packet, version, { order: 100000000, filter: { fake: null } }, event => uncensorPacket(packet, event))
     for (let [packet, version] of CHAT_CLIENT_PACKETS) mod.hook(packet, version, { order: 100000000, filter: { fake: null } }, event => uncensorPacket(packet, event))
 
